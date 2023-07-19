@@ -506,7 +506,7 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         if (level == gameOptions.maxlevel) {
           this.gameText.setText("Level ".concat(level, " completed, game finished"));
           this.time.addEvent({
-            delay: 2000,
+            delay: 4000,
             callback: function callback() {
               numflowers = 0;
               numBlocks = 0;
@@ -557,7 +557,7 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         if (level == gameOptions.maxlevel) {
           this.gameText.setText("Level ".concat(level, " completed, game finished"));
           this.time.addEvent({
-            delay: 2000,
+            delay: 4000,
             callback: function callback() {
               numflowers = 0;
               numBlocks = 0;
@@ -608,7 +608,7 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         _this5.waspGroup.killAndHide(element);
       });
       this.time.addEvent({
-        delay: 2000,
+        delay: 4000,
         callback: function callback() {
           numflowers = 0;
           numBlocks = 0;
@@ -671,14 +671,12 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
       });
       flBlue.forEach(function (fl) {
         if (Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
-          console.log("blue: ", fl.body.position.x, fl.body.position.y, new_x, new_y);
           allowed = false;
         }
         ;
       });
       flRed.forEach(function (fl) {
         if (Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
-          console.log("red: ", fl.body.position.x, fl.body.position.y, new_x, new_y);
           allowed = false;
         }
         ;
@@ -688,7 +686,6 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
       }
       ;
       if (allowed) {
-        console.log(elements[index].body.position.x, elements[index].body.position.y, new_x, new_y);
         elements[index].body.reset(new_x + gameOptions.blocksize / 2, new_y + gameOptions.blocksize / 2);
       }
     }

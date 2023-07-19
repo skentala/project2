@@ -123,6 +123,7 @@ class PlayGame extends Phaser.Scene {
     this.load.audio("sting", [require("../assets/bzzz.mp3")]);
     this.load.audio("suck", [require("../assets/suck.mp3")]);
 //    this.load.tilemapCSV("map", "../assets/map_1.csv");
+    this.load.image("bullet", require("../assets/bullet.png"));
   }
 
   create() {
@@ -305,7 +306,7 @@ class PlayGame extends Phaser.Scene {
       if (level == gameOptions.maxlevel) { 
         this.gameText.setText(`Level ${level} completed, game finished`);
         this.time.addEvent({
-          delay: 2000,
+          delay: 4000,
           callback: ()=>{
             numflowers = 0;
             numBlocks = 0;
@@ -358,7 +359,7 @@ class PlayGame extends Phaser.Scene {
       if (level == gameOptions.maxlevel) { 
         this.gameText.setText(`Level ${level} completed, game finished`);
         this.time.addEvent({
-          delay: 2000,
+          delay: 4000,
           callback: ()=>{
             numflowers = 0;
             numBlocks = 0;
@@ -408,7 +409,7 @@ class PlayGame extends Phaser.Scene {
       this.waspGroup.killAndHide(element);
     });
     this.time.addEvent({
-      delay: 2000,
+      delay: 4000,
       callback: ()=>{
         numflowers = 0;
         numBlocks = 0;
@@ -472,13 +473,11 @@ class PlayGame extends Phaser.Scene {
     });
     flBlue.forEach(fl => {
       if(Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
-        console.log("blue: ",fl.body.position.x, fl.body.position.y, new_x, new_y)
         allowed = false;
       };
     });
     flRed.forEach(fl => {
       if(Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
-        console.log("red: ",fl.body.position.x, fl.body.position.y, new_x, new_y)
         allowed = false;
       };
     });
@@ -486,7 +485,6 @@ class PlayGame extends Phaser.Scene {
       allowed = false;
     };
     if(allowed){
-      console.log(elements[index].body.position.x, elements[index].body.position.y, new_x, new_y)
       elements[index].body.reset(new_x + gameOptions.blocksize/2, new_y + gameOptions.blocksize/2);
     }
   }
