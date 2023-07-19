@@ -15,7 +15,7 @@ const gameOptions = {
   manSpeed: 150,
   blocksize: 60,
   numMen: 3,
-  numBlueFlowers: 5,
+  numBlueFlowers: 10,
   numRedFlowers: 8,
   redFlowerScore: 20,
   blueFlowerScore: 10,
@@ -26,6 +26,7 @@ const gameOptions = {
   butterflySpeed: [100, 115, 130],
   waspSpeed: [100, 120, 140],
   enemyInterval: [7000, 5500, 3500],
+  moveBlockInterval: [6000, 4500, 3000],
   butterflyRateOfEnemies: [0.7, 0.6, 0.5],
   overlapDistance: 30,
   maps: [
@@ -141,6 +142,7 @@ class PlayGame extends Phaser.Scene {
       allowGravity: false
     })
 
+    // set the wall blocks
     x = 0;
     y = 0;
     gameOptions.maps[level-1].forEach((square) => {
@@ -156,6 +158,7 @@ class PlayGame extends Phaser.Scene {
       }
       x++;
     });
+    console.log(numBlocks);
 
     for(let i = 0; i < gameOptions.numBlueFlowers; i++) {
       x = Phaser.Math.Between(1, gameOptions.xblocks-2) * gameOptions.blocksize + gameOptions.blocksize/2;
@@ -252,7 +255,14 @@ class PlayGame extends Phaser.Scene {
       delay: gameOptions.enemyInterval[level-1],
       loop: true
     });
- 
+
+    this.triggerTimer = this.time.addEvent({
+      callback: this.moveOneBlock,
+      callbackScope: this,
+      delay: gameOptions.moveBlockInterval[level-1],
+      loop: true
+    });
+
     this.physics.add.collider(this.man, this.blockGroup);
     this.physics.add.overlap(this.man, this.redFlowerGroup, this.collectFlower, this.isCloseEnoughll, this);
     this.physics.add.overlap(this.man, this.blueFlowerGroup, this.collectFlower, this.isCloseEnough, this);
@@ -271,7 +281,7 @@ class PlayGame extends Phaser.Scene {
   }
 
   isCloseEnough(body1, body2) {
-    if (Math.abs(body1.body.position.x - body2.body.position.x) < gameOptions.overlapDistance && Math.abs(body1.body.position.y - body2.body.position.y) < gameOptions.overlapDistance) {
+    if (Math.abs(body1.body.center.x - body2.body.center.x) < gameOptions.overlapDistance && Math.abs(body1.body.center.y - body2.body.center.y) < gameOptions.overlapDistance) {
       return true;
     }
     return false;
@@ -436,6 +446,51 @@ class PlayGame extends Phaser.Scene {
       }
     }
   }
+
+  moveOneBlock() {
+    let elements = this.blockGroup.getChildren();
+    let flBlue = this.blueFlowerGroup.getChildren();
+    let flRed = this.redFlowerGroup.getChildren();
+    let index = 0;
+    while(true) {
+      index = Phaser.Math.Between(gameOptions.xblocks, numBlocks-gameOptions.xblocks);
+      let x = elements[index].body.position.x;
+      if(x == 0 || x / gameOptions.blocksize == gameOptions.xblocks-1) {
+        continue;
+      }
+      else break;
+    }
+    let new_x = Phaser.Math.Between(1, gameOptions.xblocks-2)*gameOptions.blocksize;
+    let new_y = Phaser.Math.Between(1, gameOptions.yblocks-2)*gameOptions.blocksize;
+    let i = 0;
+    let allowed = true;
+    elements.forEach(element => {
+      if(i != index && element.body.position.x == new_x && element.body.position.y == new_y) {
+        allowed = false;
+      };
+      i++;
+    });
+    flBlue.forEach(fl => {
+      if(Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
+        console.log("blue: ",fl.body.position.x, fl.body.position.y, new_x, new_y)
+        allowed = false;
+      };
+    });
+    flRed.forEach(fl => {
+      if(Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
+        console.log("red: ",fl.body.position.x, fl.body.position.y, new_x, new_y)
+        allowed = false;
+      };
+    });
+    if(Math.abs(this.man.body.position.x - new_x) < gameOptions.blocksize && Math.abs(this.man.body.position.y - new_y) < gameOptions.blocksize) {
+      allowed = false;
+    };
+    if(allowed){
+      console.log(elements[index].body.position.x, elements[index].body.position.y, new_x, new_y)
+      elements[index].body.reset(new_x + gameOptions.blocksize/2, new_y + gameOptions.blocksize/2);
+    }
+  }
+
 
   update() {
     if(this.cursors.left.isDown) {

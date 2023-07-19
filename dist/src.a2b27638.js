@@ -230,7 +230,7 @@ var gameOptions = {
   manSpeed: 150,
   blocksize: 60,
   numMen: 3,
-  numBlueFlowers: 5,
+  numBlueFlowers: 10,
   numRedFlowers: 8,
   redFlowerScore: 20,
   blueFlowerScore: 10,
@@ -241,6 +241,7 @@ var gameOptions = {
   butterflySpeed: [100, 115, 130],
   waspSpeed: [100, 120, 140],
   enemyInterval: [7000, 5500, 3500],
+  moveBlockInterval: [6000, 4500, 3000],
   butterflyRateOfEnemies: [0.7, 0.6, 0.5],
   overlapDistance: 30,
   maps: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0, -1, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, -1, -1, 0, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, -1, 0, 0, -1, 0, 0, -1, -1, 0, -1, -1, -1, -1, 0, -1, -1, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, 0, 0, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, 0, 0, -1, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, -1, -1, 0, 0, -1, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0, -1, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, -1, -1, 0, -1, 0, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, 0, 0, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, 0, -1, -1, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, 0, 0, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, -1, -1, 0, 0, 0, 0, 0, -1, 0, 0, -1, -1, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1, -1, -1, 0, 0, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, -1, -1, -1, -1, 0, -1, -1, -1, -1, 0, 0, -1, 0, 0, -1, 0, -1, -1, -1, -1, 0, 0, -1, 0, 0, -1, 0, -1, -1, 0, 0, 0, 0, -1, -1, 0, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, 0, 0, -1, -1, -1, -1, -1, 0, -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, -1, -1, 0, -1, 0, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, 0, -1, -1, -1, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, 0, 0, -1, -1, 0, -1, -1, -1, -1, -1, -1, 0, -1, -1, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
@@ -319,6 +320,8 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         immovable: true,
         allowGravity: false
       });
+
+      // set the wall blocks
       x = 0;
       y = 0;
       gameOptions.maps[level - 1].forEach(function (square) {
@@ -337,6 +340,7 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         }
         x++;
       });
+      console.log(numBlocks);
       for (var i = 0; i < gameOptions.numBlueFlowers; i++) {
         x = Phaser.Math.Between(1, gameOptions.xblocks - 2) * gameOptions.blocksize + gameOptions.blocksize / 2;
         y = Phaser.Math.Between(1, gameOptions.yblocks - 2) * gameOptions.blocksize + gameOptions.blocksize / 2;
@@ -446,6 +450,12 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
         delay: gameOptions.enemyInterval[level - 1],
         loop: true
       });
+      this.triggerTimer = this.time.addEvent({
+        callback: this.moveOneBlock,
+        callbackScope: this,
+        delay: gameOptions.moveBlockInterval[level - 1],
+        loop: true
+      });
       this.physics.add.collider(this.man, this.blockGroup);
       this.physics.add.overlap(this.man, this.redFlowerGroup, this.collectFlower, this.isCloseEnoughll, this);
       this.physics.add.overlap(this.man, this.blueFlowerGroup, this.collectFlower, this.isCloseEnough, this);
@@ -471,7 +481,7 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
   }, {
     key: "isCloseEnough",
     value: function isCloseEnough(body1, body2) {
-      if (Math.abs(body1.body.position.x - body2.body.position.x) < gameOptions.overlapDistance && Math.abs(body1.body.position.y - body2.body.position.y) < gameOptions.overlapDistance) {
+      if (Math.abs(body1.body.center.x - body2.body.center.x) < gameOptions.overlapDistance && Math.abs(body1.body.center.y - body2.body.center.y) < gameOptions.overlapDistance) {
         return true;
       }
       return false;
@@ -632,6 +642,54 @@ var PlayGame = /*#__PURE__*/function (_Phaser$Scene) {
           w.setVelocityX(-gameOptions.waspSpeed[level - 1] / 1.7);
           w.anims.play("waspleft", true);
         }
+      }
+    }
+  }, {
+    key: "moveOneBlock",
+    value: function moveOneBlock() {
+      var elements = this.blockGroup.getChildren();
+      var flBlue = this.blueFlowerGroup.getChildren();
+      var flRed = this.redFlowerGroup.getChildren();
+      var index = 0;
+      while (true) {
+        index = Phaser.Math.Between(gameOptions.xblocks, numBlocks - gameOptions.xblocks);
+        var _x = elements[index].body.position.x;
+        if (_x == 0 || _x / gameOptions.blocksize == gameOptions.xblocks - 1) {
+          continue;
+        } else break;
+      }
+      var new_x = Phaser.Math.Between(1, gameOptions.xblocks - 2) * gameOptions.blocksize;
+      var new_y = Phaser.Math.Between(1, gameOptions.yblocks - 2) * gameOptions.blocksize;
+      var i = 0;
+      var allowed = true;
+      elements.forEach(function (element) {
+        if (i != index && element.body.position.x == new_x && element.body.position.y == new_y) {
+          allowed = false;
+        }
+        ;
+        i++;
+      });
+      flBlue.forEach(function (fl) {
+        if (Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
+          console.log("blue: ", fl.body.position.x, fl.body.position.y, new_x, new_y);
+          allowed = false;
+        }
+        ;
+      });
+      flRed.forEach(function (fl) {
+        if (Math.abs(fl.body.position.x - new_x) < gameOptions.blocksize && Math.abs(fl.body.position.y - new_y) < gameOptions.blocksize) {
+          console.log("red: ", fl.body.position.x, fl.body.position.y, new_x, new_y);
+          allowed = false;
+        }
+        ;
+      });
+      if (Math.abs(this.man.body.position.x - new_x) < gameOptions.blocksize && Math.abs(this.man.body.position.y - new_y) < gameOptions.blocksize) {
+        allowed = false;
+      }
+      ;
+      if (allowed) {
+        console.log(elements[index].body.position.x, elements[index].body.position.y, new_x, new_y);
+        elements[index].body.reset(new_x + gameOptions.blocksize / 2, new_y + gameOptions.blocksize / 2);
       }
     }
   }, {
